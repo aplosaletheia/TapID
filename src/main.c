@@ -39,7 +39,7 @@ void data_callback(ma_device* pDevice, void* pOutput, const void* pInput, ma_uin
 
 int initCaptureDevice()
 {
-    ma_device_config config = ma_device_config_init(ma_device_type_loopback);
+    ma_device_config config = ma_device_config_init(ma_device_type_capture);
     config.capture.format = ma_format_f32;
     config.capture.channels = 1;
     config.sampleRate = SAMPLE_RATE;
