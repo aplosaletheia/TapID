@@ -1,2 +1,2 @@
-gcc main.c fft.c miniaudio_impl.o -o test.exe
+gcc main.c ft.c miniaudio_impl.o -o test.exe
 .\test.exe
