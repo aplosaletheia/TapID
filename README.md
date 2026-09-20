@@ -278,9 +278,9 @@ Example validation format: (tapped using a 10rs coin, 7-10 samples were taken fo
 
 | Object          | Taps | Correct | Unknown | Incorrect |
 | ----------------| ---: | ------: | ------: | --------: |
-| metal bottle    |   10 |       - |       - |         - |
+| metal bottle    |   10 |      10 |       - |         - |
 | glass container |   10 |      10 |       0 |         0 |
-| plastic bottle  |   10 |       — |       — |         - |
+| plastic bottle  |   10 |      10 |       — |         - |
 
 > **Replace this table with actual blind-test results.**
 
