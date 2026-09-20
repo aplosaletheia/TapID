@@ -212,10 +212,7 @@ int compareFreqs(const void* a, const void* b)
     multiple times just because it happened to produce two
     nearby peaks.
 */
-size_t clusterSupport(
-    const peakPoint_s* points,
-    size_t begin,
-    size_t end)
+size_t clusterSupport(const peakPoint_s* points, size_t begin, size_t end)
 {
     size_t support = 0;
 
@@ -279,11 +276,9 @@ objectRecord_s computeAveragedSignature(const char* name)
             */
             if (pointCount >= pointCapacity)
             {
-                size_t newCapacity =
-                    (pointCapacity == 0) ? 64 : pointCapacity * 2;
+                size_t newCapacity = (pointCapacity == 0) ? 64 : pointCapacity * 2;
 
-                peakPoint_s* newPoints =
-                    realloc(points, newCapacity * sizeof(*points));
+                peakPoint_s* newPoints = realloc(points, newCapacity * sizeof(*points));
 
                 if (!newPoints)
                 {
@@ -337,8 +332,7 @@ objectRecord_s computeAveragedSignature(const char* name)
             5 recordings -> 3
             ...
     */
-    size_t minSupport =
-        (size_t)ceilf((float)sampleCount * DB_MIN_SUPPORT_RATIO);
+    size_t minSupport = (size_t)ceilf((float)sampleCount * DB_MIN_SUPPORT_RATIO);
 
     if (minSupport < 1)
         minSupport = 1;
@@ -429,10 +423,7 @@ objectRecord_s computeAveragedSignature(const char* name)
     /*
         Keep only MAX_PEAKS clusters.
     */
-    size_t keepCount =
-        (clusterCount < MAX_PEAKS)
-        ? clusterCount
-        : MAX_PEAKS;
+    size_t keepCount = (clusterCount < MAX_PEAKS)? clusterCount: MAX_PEAKS;
 
     for (size_t k = 0; k < keepCount; k++)
     {
@@ -568,17 +559,7 @@ matchState_s solveMatch(
 
     if (diff <= MATCH_TOLERANCE_HZ)
     {
-        matchState_s matched =
-            solveMatch(
-                liveFreq,
-                liveCount,
-                storedFreq,
-                storedCount,
-                i + 1,
-                j + 1,
-                memo,
-                visited
-            );
+        matchState_s matched =solveMatch(liveFreq, liveCount, storedFreq, storedCount, i + 1, j + 1, memo, visited);
 
         matched.matched++;
         matched.totalError += diff;
@@ -597,22 +578,12 @@ float scoreMatch(signature_s live, objectRecord_s stored)
     if (live.count == 0 || stored.count == 0)
         return 1e9f;
 
-    /*
-        Copy frequencies so we can sort them without modifying
-        the caller's structures.
-    */
     float liveFreq[MAX_PEAKS];
     float storedFreq[MAX_PEAKS];
 
-    size_t liveCount =
-        (live.count < MAX_PEAKS)
-        ? live.count
-        : MAX_PEAKS;
+    size_t liveCount = (live.count < MAX_PEAKS)? live.count: MAX_PEAKS;
 
-    size_t storedCount =
-        (stored.count < MAX_PEAKS)
-        ? stored.count
-        : MAX_PEAKS;
+    size_t storedCount = (stored.count < MAX_PEAKS)? stored.count: MAX_PEAKS;
 
     for (size_t i = 0; i < liveCount; i++)
         liveFreq[i] = live.freq[i];
@@ -652,17 +623,9 @@ float scoreMatch(signature_s live, objectRecord_s stored)
     if (result.matched == 0)
         return 1e9f;
 
-    /*
-        Same general scoring idea as your original:
+    float averageError = result.totalError / (float)result.matched;
 
-        - lower frequency error is better
-        - more matched peaks is better
-    */
-    float averageError =
-        result.totalError / (float)result.matched;
-
-    float coverage =
-        (float)result.matched / (float)liveCount;
+    float coverage = (float)result.matched / (float)liveCount;
 
     return averageError / coverage;
 }
@@ -693,6 +656,7 @@ void identifyObject(signature_s live)
             continue;
 
         float score = scoreMatch(live, rec);
+        printf("%-20s score=%.3f\n", rec.name, score);
 
         if (score < bestScore)
         {
@@ -716,40 +680,9 @@ void identifyObject(signature_s live)
         return;
     }
 
-    /*
-        For your hackathon demo, this gives a simple rejection rule.
+    float similarity = 1.0f / (1.0f + bestScore);
 
-        Adjust experimentally after collecting your database.
-    */
-    if (bestScore > 25.0f)
-    {
-        printf("RESULT:unknown:0.00\n");
-        return;
-    }
-
-    /*
-        If the second-best object is almost as good, don't pretend
-        the classification is highly certain.
-    */
-    if (secondBestScore < 1e8f)
-    {
-        float margin = secondBestScore - bestScore;
-
-        if (margin < 2.0f)
-        {
-            printf("RESULT:unknown:0.00\n");
-            return;
-        }
-    }
-
-    float similarity =
-        1.0f / (1.0f + bestScore);
-
-    printf(
-        "RESULT:%s:%.2f\n",
-        bestName,
-        similarity
-    );
+    printf("Best Match: %s",bestName);
 }
 
 int main()

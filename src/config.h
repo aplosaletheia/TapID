@@ -7,7 +7,7 @@
 #define MAX_PEAKS 6
 #define MAX_NAME 30
 
-#define MATCH_TOLERANCE_HZ 10.0f
+#define MATCH_TOLERANCE_HZ 15.0f
 
 #define DB_CLUSTER_TOLERANCE_HZ 8.0f
 #define DB_MIN_SUPPORT_RATIO    0.50f

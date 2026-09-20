@@ -274,13 +274,13 @@ Keeping the excitation consistent makes the comparison between reference and liv
 
 TapID is designed to be evaluated experimentally rather than assumed to work.
 
-Example validation format:
+Example validation format: (tapped using a 10rs coin, 7-10 samples were taken for the database for each object)
 
-| Object    | Taps | Correct | Unknown | Incorrect |
-| --------- | ---: | ------: | ------: | --------: |
-| Table     |    — |       — |       — |         — |
-| Notebook  |    — |       — |       — |         — |
-| Door      |    — |       — |       — |         — |
+| Object          | Taps | Correct | Unknown | Incorrect |
+| ----------------| ---: | ------: | ------: | --------: |
+| metal bottle    |   10 |       - |       - |         - |
+| glass container |   10 |      10 |       0 |         0 |
+| plastic bottle  |   10 |       — |       — |         - |
 
 > **Replace this table with actual blind-test results.**
 
