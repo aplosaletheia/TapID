@@ -674,7 +674,7 @@ void identifyObject(signature_s live)
 
     fclose(f);
 
-    if (bestScore >= 100f)
+    if (bestScore >= 100.f)
     {
         printf("RESULT:unknown:0.00\n");
         return;
