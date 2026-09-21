@@ -282,8 +282,6 @@ Example validation format: (tapped using a 10rs coin, 7-10 samples were taken fo
 | glass container |   10 |      10 |       0 |         0 |
 | plastic bottle  |   10 |      10 |       — |         - |
 
-> **Replace this table with actual blind-test results.**
-
 The goal is not to demonstrate that TapID can always identify an object.
 
 The goal is to measure how reliably its acoustic fingerprints distinguish objects under controlled conditions.
